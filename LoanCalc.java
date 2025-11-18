@@ -24,22 +24,19 @@ public class LoanCalc {
 
 	private static double endBalance(double loan, double rate, int n, double payment) {	
 		int counter = 0;
-		double r = 1.0+rate;
+		double r = (rate/100)+1.0;
 		while (counter <n){
-			loan = loan*r-payment;
+			loan = (loan-payment)*r;
 			counter++;
 
 		}
-		if (loan<=0)
-		return 0;
-		else
 		return loan;
 	}
 	
     public static double bruteForceSolver(double loan, double rate, int n, double epsilon) {
 		double g=loan/n;
 		iterationCounter=0;
-		while (endBalance(loan, rate, n, g)>0 && g<=loan){
+		while (endBalance(loan, rate, n, g)>0){
 			g+=epsilon;
 			iterationCounter++;
 
