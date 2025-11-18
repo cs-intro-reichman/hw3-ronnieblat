@@ -25,15 +25,18 @@ public class Algebra {
 
 	// Returns x1 + x2
 	public static int plus(int x1, int x2) {
-		int counter = 0;
 		int sum=x1;
-		while (x2>0 & counter<x2){
-			counter++;
-			sum++;
+		if (x2>0){
+			while (x2>0){
+				sum++;
+				x2--;
+			}
 		}
-		while (x2<0 & counter<x2){
-			counter++;
-			sum--;
+		else{
+			while (x2<0) {
+				sum--;
+				x2++;
+			}
 		}
 		return sum;
 		
@@ -43,27 +46,26 @@ public class Algebra {
 	public static int minus(int x1, int x2) {
 		if (x1 == x2)
 		return 0;
-		else {
-			int counter = 0;
-			int difference=x1;
-			while (x2>0 & counter<x2){
+		int difference=x1;
+		if (x2>0){
+			while (x2>0){
 				difference--;
-				counter++;
-				
+				x2--;
+			}
 		}
-		while (x2<0 & counter<x2){
+		if (x2<0){
+			while (x2<0) {
 				difference++;
-				counter++;
+				x2++;				
+			}
 		}
 		return difference;
-		}
 	}
 
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
 		if (x1 == 0 || x2 == 0)
 		return 0;
-		else {
 			int counter = 0;
 			int multiplication=0;
 			boolean flag = false;
@@ -83,7 +85,6 @@ public class Algebra {
 		multiplication= minus(0, multiplication);
 		return multiplication;
 		}
-	}
 
 	// Returns x^n (for n >= 0)
 	public static int pow(int x, int n) {
@@ -104,35 +105,28 @@ public class Algebra {
 
 	// Returns the integer part of x1 / x2 
 	public static int div(int x1, int x2) {
-		if (x1==0)
+		if (x2==0)
 		return 0;
-		if (x2 == 0)
-		return -1;
-		else {
-			int counter = 0;
-			int portion = x1;
-			if (x1<0 & x2<0){
-				x1 = plus(x1, plus(x1, x1));
-				x2 = plus(x2, plus(x2, x2));
-			}
-			if (x1>0 & x2>0){
-				while (portion>0){
-				portion = minus(portion, x2);
-				if (portion>=0)
-				counter++;
-			}
-			return counter;
-			}
-			else {
-				while (portion>0){
-				portion = plus(portion, x2);
-				if (portion>=0)
-				counter++;
-			}
-			return counter;
+		boolean positive=true;
+		int counter=0;
+		if (x1<0){
+			x1=minus(0, x1);
+			positive=!positive;
 		}
+		if (x2<0){
+			x2=minus(0, x2);
+			positive=!positive;
+		}
+		while (x1>=x2) {
+			x1=minus(x1, x2);
+			counter++;
+			
+		}
+		if (!positive)
+		counter=minus(0, counter);
+		return counter;
 	}
-	}
+
 
 	// Returns x1 % x2
 	public static int mod(int x1, int x2) {
